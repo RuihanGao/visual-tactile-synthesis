@@ -1,0 +1,51 @@
+data[0-9]*
+datasets*
+checkpoints/*
+dexined.pth
+results/*
+logs/*
+wandb/*
+__pycache__/*
+sample_T.npz
+test_sketches*/*
+datasets/*
+results_*/*
+results_BlackShorts_legacy/*
+*.pyc
+launch*.sh
+*.out
+*.log
+UI_SKIT/static/*
+sample*.png
+util/UI_click/results*/*
+*_bakcup*/*
+*_legacy*/*
+*.yml
+
+# Ref for the following rules: 
+#  https://gist.github.com/GhostofGoes/94580e76cd251972b15b4821c8a06f59
+#  https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+
+
+# Editors
+.vscode/
+.idea/
+
+# Mac/OSX
+.DS_Store
+__MACOSX/
+
+# Byte-compiled / optimized / DLL files
+*__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+
+# Unit test / coverage reports
+.cache
