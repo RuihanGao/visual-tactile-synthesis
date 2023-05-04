@@ -44,7 +44,7 @@ class Launcher(TmuxLauncher):
             option_list.append(
                 Options(
                     name=f"{material}_pix2pix_baseline",
-                    use_wandb="",
+                    # use_wandb="",
                     model="pix2pix",
                     dataset="patchskit",
                     dataroot=f"./datasets/singleskit_{material}_padded_1800_x1/",

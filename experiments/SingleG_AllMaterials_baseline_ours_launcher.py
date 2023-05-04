@@ -47,11 +47,9 @@ class Launcher(TmuxLauncher):
             option_list.append(
                 Options(
                     name=f"{material}_sinskitG_baseline_ours",
-                    use_wandb="",
+                    # use_wandb="",
                     model="sinskitG",
                     dataroot=f"./datasets/singleskit_{material}_padded_1800_x1/",
-                    netD="multiscale",
-                    netD2="multiscale",
                     # gpu_ids=-1, # use CPU
                     # data_len=3, # set to a small number for debugging
                 )
@@ -83,11 +81,7 @@ class Launcher(TmuxLauncher):
                 + str(
                     opt.set(
                         eval="",
-                        preprocess="none",
-                        data_len=1,
-                        num_touch_patch_for_logging=100,
-                        batch_size_G2=100,
-                        save_raw_arr_vis=True,
+                        # save_raw_arr_vis=True,
                     )
                 )
             )

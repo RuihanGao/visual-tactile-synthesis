@@ -322,7 +322,8 @@ class SinSKITGModel(BaseModel):
             model="sinskitG",
             dataset_mode="singleskit",
             netG="unet256_custom",
-            netD="basic",
+            netD="multiscale",
+            netD2="multiscale",
             gan_mode="nonsaturating",
             ngf=10,
             ndf=8,
@@ -334,7 +335,7 @@ class SinSKITGModel(BaseModel):
             dataroot="./datasets/singleskit_FlowerShorts_padded_1800_x1/",
         )
 
-        verbose_freq = 100  # default is 100, set to 3 for debugging
+        verbose_freq = 3  # default is 100, set to 3 for debugging
         if is_train:
             parser.set_defaults(
                 preprocess="crop",  # "zoom_and_crop"
@@ -362,7 +363,8 @@ class SinSKITGModel(BaseModel):
                 data_len=1,  # no augmentation required for testing
                 epoch="latest",  # set to epoch number if not using the latest model
                 # for testing dataset, only 13 test patches, set a lower limit for visualiza
-                num_touch_patch_for_logging=10,
+                num_touch_patch_for_logging=100,
+                batch_size_G2=100,
                 model_phase="eval",
                 display_id=0,  # try to disable displaying results on html
                 save_S_patch=True,
@@ -419,8 +421,8 @@ class SinSKITGModel(BaseModel):
             self.visual_names.extend(["pred_fake_I"])
         if self.isTrain and opt.lambda_G2_GAN > 0:
             self.visual_names.extend(["pred_fake_T_full"])
-        if hasattr(opt, "use_diffaug") and opt.use_diffaug and not self.test_edit_S: # no ground truth for edited S
-                self.visual_names.extend(["aug_fake_I", "aug_real_I"])
+        if hasattr(opt, "use_diffaug") and opt.use_diffaug and not self.test_edit_S:  # no ground truth for edited S
+            self.visual_names.extend(["aug_fake_I", "aug_real_I"])
 
         # specify the losses you want to print out for logging
         # The training/test scripts will call <BaseModel.get_current_losses>
@@ -1318,14 +1320,16 @@ class SinSKITGModel(BaseModel):
         self.fake_gx = torch.unsqueeze(self.fake_T[:, 0, :, :], 1)
         self.fake_gy = torch.unsqueeze(self.fake_T[:, 1, :, :], 1)
         self.fake_N = compute_normal(
-        self.fake_T[:, :2, :, :].detach(), scale_nz=self.opt.scale_nz
-        )  # set scale_nz = 1 for visualization    
-    
+            self.fake_T[:, :2, :, :].detach(), scale_nz=self.opt.scale_nz
+        )  # set scale_nz = 1 for visualization
+
         if not self.test_edit_S:
             # apply DiffAug and mask
             if hasattr(self.opt, "use_diffaug") and self.opt.use_diffaug:
                 # apply DiffAugment to real_I and fake_I
-                self.aug_real_I = DiffAugment(self.real_I, policy=self.opt.diffaugment) if hasattr(self, "real_I") else None
+                self.aug_real_I = (
+                    DiffAugment(self.real_I, policy=self.opt.diffaugment) if hasattr(self, "real_I") else None
+                )
                 self.aug_fake_I = DiffAugment(self.fake_I, policy=self.opt.diffaugment)
             else:
                 # no augmentation

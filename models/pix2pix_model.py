@@ -156,7 +156,12 @@ class Pix2PixModel(BaseModel):
             )
         else:
             parser.set_defaults(
-                return_patch=False, batch_size=1, save_S_patch=True, save_raw_arr_vis=False, sample_bbox_per_patch=1
+                return_patch=False, 
+                batch_size=1, 
+                save_S_patch=True, 
+                save_raw_arr_vis=False, 
+                sample_bbox_per_patch=1,
+                data_len=1,
             )
 
         return parser
@@ -506,7 +511,7 @@ class Pix2PixModel(BaseModel):
         Compute non-self-attribute visuals (for efficient memory usage): patches of S, I, I', T(gx), T'(gx), T(gy), T'(gy) for both train & eval
         It also computes and updates the evaluation.
         """
-        
+
         I_mask_concat = (
             self.I_masks
             if hasattr(self, "I_masks")

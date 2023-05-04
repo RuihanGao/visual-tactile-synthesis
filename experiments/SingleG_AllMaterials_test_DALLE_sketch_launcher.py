@@ -38,8 +38,6 @@ class Launcher(TmuxLauncher):
                 name=f"{material}_sinskitG_baseline_ours",
                 # use_wandb="", 
                 model="sinskitG",
-                netD='multiscale', 
-                netD2='multiscale',
                 dataroot=DALLE_material_dataset,
                 ))
 

@@ -44,9 +44,8 @@ class Launcher(TmuxLauncher):
             option_list.append(
                 Options(
                     name=f"{material}_pix2pixHD_baseline",
-                    use_wandb="",
+                    # use_wandb="",
                     model="pix2pixHD",
-                    netD="multiscale",
                     dataset="patchskit",
                     dataroot=f"./datasets/singleskit_{material}_padded_1800_x1/",
                 )
@@ -79,7 +78,6 @@ class Launcher(TmuxLauncher):
                     opt.set(
                         eval="",
                         preprocess="none",
-                        data_len=1,
                         num_touch_patch_for_logging=100,
                         batch_size_G2=100,
                         save_raw_arr_vis=True,

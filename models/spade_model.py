@@ -245,6 +245,7 @@ class SPADEModel(BaseModel):
                 save_S_patch=True,
                 save_raw_arr_vis=False,
                 sample_bbox_per_patch=1,
+                data_len=1,
                 # SPADE options
                 load_size=1800,
                 output_width=1536,

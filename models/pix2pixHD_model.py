@@ -248,7 +248,12 @@ class Pix2PixHDModel(BaseModel):
             )
         else:
             parser.set_defaults(
-                return_patch=False, batch_size=1, save_S_patch=True, save_raw_arr_vis=False, sample_bbox_per_patch=1
+                return_patch=False, 
+                batch_size=1, 
+                save_S_patch=True, 
+                save_raw_arr_vis=False, 
+                sample_bbox_per_patch=1,
+                data_len=1
             )
 
         return parser

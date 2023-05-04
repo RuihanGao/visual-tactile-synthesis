@@ -19,15 +19,18 @@ We are plan to release our code and dataset in the following steps:
 - [x] Inference and Evaluation code 
 - [x] Preprocessed data of all 20 garments in our <i>TouchClothing</i> dataset
 - [x] Pretrained model (ours & baselines) on the <i>TouchClothing</i> dataset
-- [ ] Training code
+- [x] Training code
 - [ ] Data preprocessing code for camera and GelSight R1.5 data
+- [ ] Rendering code to generate friction maps for TanvasTouch
+- [ ] Instructions of how to create customized testing dataset
 
 ## Setup
 This code was tested with Python 3.8 and [Pytorch](https://pytorch.org/) 1.11.0.
 ```
 git clone https://github.com/RuihanGao/Visual-Tactile-Syn.git
+cd Visual-Tactile-Syn
 conda env create -f environment.yml
-conda activate VTS
+conda activate SKIT
 ```
 
 ### Dataset
@@ -43,31 +46,44 @@ Example of preprocessed data:
 
 Use the following commands to download and unzip the dataset. <br>
 (1) Download the preprocessed data from Google Drive via the following command: 
-(install `gdown` if you haven't done so) <br>
+(install `gdown` and `unzip` if you haven't done so) <br>
 Total size: 580M, which takes about 20s to download. <br>
 ```
 pip install gdown
+sudo apt install unzip
 gdown "https://drive.google.com/uc?export=download&id=1VlgYpDSxQP70sYpFERHuzKnTNIH4Gf4s"
-unzip TouchClothing_dataset.zip
+unzip -q TouchClothing_dataset.zip
 ```
-(2) Put the unzipped folder named `datasets` in the code repo.
+(2) Put the unzipped folder `datasets` in the code repo.
+
+Note: 
+* in case there is "access denied" error, try `pip install -U --no-cache-dir gdown --pre` and run `gdown` command again. [Ref here](https://github.com/wkentaro/gdown/issues/43#issuecomment-621356443)
+* use `-q` flag to `unzip` to suppress the log as it could be quite long
 
 ### Pre-trained models
 We provide the pretrained models for 1. our method 2. baselines included in our paper. For each method, we provide 20 models, one for each object in our <i>TouchClothing</i> dataset.
 See the Google drive folder [here](https://drive.google.com/drive/folders/1ewamRPEyKir3jiPoeS7NBmZPZbFqxEoB?usp=sharing). To use them, <br>
 (1) download the checkpoints <br>
-* checkpoints for our method (124M): `gdown https://drive.google.com/uc?export=download&id=11y2jP2vT7CtBIaEDcjROZ5hupHsYWG8D`
-* checkpoints for baselines (21.5G): `gdown https://drive.google.com/uc?export=download&id=1vBd7awJJml5wDEp5gQGeyefpvilTOByw`
+* checkpoints for our method (124M): `gdown "https://drive.google.com/uc?export=download&id=11y2jP2vT7CtBIaEDcjROZ5hupHsYWG8D"`
+* checkpoints for baselines (21.5G): `gdown "https://drive.google.com/uc?export=download&id=1vBd7awJJml5wDEp5gQGeyefpvilTOByw"`
 
-(2) After unzipping, put all pre-trained models in the folder `checkpoints` to load them properly in the testing code.
+(2) After unzipping the files, put all pre-trained models in the folder `checkpoints` to load them properly in the testing code.
 
 ## Usage
 In general, our pipeline contains two steps. We first feed the sketch input to our model to synthesize synchronized visual and tactile output that imitates the appearance and geometry of the training object. Then we convert the tactile output to a friction map required by TanvasTouch and render the multi-modal output on the surface haptic device, where you can <i>see</i> and <i>feel</i> the object simultaneously.
 
 ### Train our model
 ```
+material=BlackJeans
+CUDA_VISIBLE_DEVICES=0 python train.py  --gpu_ids 0 --name "${material}_sinskitG_baseline_ours" --model sinskitG --dataroot ./datasets/"singleskit_${material}_padded_1800_x1/"
+```
+where you can choose the variable `material` from our <i>TouchClothing</i> dataset or your own customized dataset.
+
+To use our launcher scripts to run multiple experiments in tmux window, use the following command: <br>
+([Ref here](https://github.com/taesungp/contrastive-unpaired-translation#training-using-our-launcher-scripts) for more examples and explanations for tmux launcher)
+```
 material_idx=0
-python -m experiments SingleG_AllMaterials_baseline_ours train $material_idx
+python -m experiments SingleG_AllMaterials_baseline_ours launch $material_idx
 ```
 where the material_idx set which object in the dataset to use. Replace the material_idx by any other number within the length of material list or use 'all' to run multiple experiments at once.
 The list of the material can be found in the launcher file `experiments/SingleG_AllMaterials_baseline_ours_launcher.py` 
@@ -76,6 +92,12 @@ Note: Loading the dataset to cache before training may take up to 20-30 mins and
 For a proof-of-concept training, set `data_len` in `SingleG_AllMaterials_baseline_ours_launcher` and `verbose_freq` in `models/sinskitG_model.py` to a smaller number, e.g. 3 or 10.
 
 ### Test our model
+```
+material=BlackJeans
+CUDA_VISIBLE_DEVICES=0 python test.py  --gpu_ids 0 --name "${material}_sinskitG_baseline_ours" --model sinskitG --dataroot ./datasets/"singleskit_${material}_padded_1800_x1/" --epoch best --eval
+```
+
+Or, if you are using `tmux_launcher`, use the following command
 ```
 material_idx=0
 python -m experiments SingleG_AllMaterials_baseline_ours test $material_idx

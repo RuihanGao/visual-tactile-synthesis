@@ -298,7 +298,8 @@ class SKITGModel(BaseModel):
             dataset_mode="skit",
             # configuration for Sketch2Iamge. Follow sincut setting
             netG="unet256_custom",
-            netD="basic",
+            netD="multiscale",
+            netD2="multiscale",
             gan_mode="nonsaturating",
             ngf=10,
             ndf=8,
@@ -337,7 +338,8 @@ class SKITGModel(BaseModel):
                 num_test=1,
                 data_len=1,  # no augmentation required for testing
                 epoch="latest",  # set to epoch number if not using the latest model
-                num_touch_patch_for_logging=10,  # for testing dataset, only 13 test patches, set a lower limit for visualiza
+                num_touch_patch_for_logging=100,
+                batch_size_G2=100,
                 model_phase="eval",
                 display_id=0,  # try to disable displaying results on html
                 save_S_patch=True,
