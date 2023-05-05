@@ -4,7 +4,7 @@
 
 **Content creation beyond visual outputs**: We present an image-to-image method to synthesize the visual appearance and tactile geometry of different materials, given a handcrafted or DALL⋅E 2 sketch. We then render the outputs on a surface haptic device like TanvasTouch® where users can slide on the screen to feel the rendered textures.
 
-[![Teaser video](https://img.youtube.com/vi/TdwPfwsGX3I/default.jpg)](https://youtu.be/TdwPfwsGX3I)
+<!-- [![Teaser video](https://img.youtube.com/vi/TdwPfwsGX3I/default.jpg)](https://youtu.be/TdwPfwsGX3I) -->
 
 ***Controllable Visual-Tactile Synthesis*** <br>
 [Ruihan Gao](https://ruihangao.com/), [Wenzhen Yuan](http://robotouch.ri.cmu.edu/yuanwz/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
@@ -80,6 +80,8 @@ See the Google Drive folder [here](https://drive.google.com/drive/folders/1ewamR
 
 (2) After unzipping the files, put all pre-trained models in the folder `checkpoints` to load them properly in the testing code.
 
+(3) See [testing section](#test-our-model) for examples of using the pretrained models.
+
 ## Usage
 In general, our pipeline contains two steps. We first feed the sketch input to our model to synthesize synchronized visual and tactile output. Then we convert the tactile output to a friction map required by TanvasTouch and render the multi-modal output on the surface haptic device, where you can <i>see</i> and <i>feel</i> the object simultaneously.
 
@@ -103,6 +105,9 @@ Note: Loading the dataset to cache before training may take up to 20-30 mins and
 For a proof-of-concept training, set `data_len` in `SingleG_AllMaterials_baseline_ours_launcher` and `verbose_freq` in `models/sinskitG_model.py` to a smaller number (e.g., 3 or 10).
 
 ### Test our model
+
+
+# Contents
 ```
 material=BlackJeans
 CUDA_VISIBLE_DEVICES=0 python test.py  --gpu_ids 0 --name "${material}_sinskitG_baseline_ours" --model sinskitG --dataroot ./datasets/"singleskit_${material}_padded_1800_x1/" --epoch best --eval
