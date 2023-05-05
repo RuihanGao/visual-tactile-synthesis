@@ -80,7 +80,7 @@ See the Google Drive folder [here](https://drive.google.com/drive/folders/1ewamR
 
 (2) After unzipping the files, put all pre-trained models in the folder `checkpoints` to load them properly in the testing code.
 
-(3) See the [testing section](###test-our-model) for more examples of how to evaluate the pretrained models.
+(3) See the [testing section](#test-our-model) for more examples of how to evaluate the pretrained models.
 
 ## Usage
 In general, our pipeline contains two steps. We first feed the sketch input to our model to synthesize synchronized visual and tactile output. Then we convert the tactile output to a friction map required by TanvasTouch and render the multi-modal output on the surface haptic device, where you can <i>see</i> and <i>feel</i> the object simultaneously.
