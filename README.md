@@ -2,9 +2,10 @@
 
 ### [Project Page](https://visual-tactile-synthesis.github.io/) | [Paper](https://arxiv.org/abs/2305.03051)
 
-**Content creation beyond visual outputs**: We present an image-to-image method to synthesize the visual appearance and tactile geometry of different materials, given a handcrafted or DALL⋅E 2 sketch. We then render the outputs on a surface haptic device like TanvasTouch® where users can slide on the screen to feel the rendered textures.
+**Content creation beyond visual outputs**: We present an image-to-image method to synthesize the visual appearance and tactile geometry of different materials, given a handcrafted or DALL⋅E 2 sketch. We then render the outputs on a surface haptic device like TanvasTouch® where users can slide on the screen to feel the rendered textures. (Turn the audio ON to hear the sound of the rendering.)
 
-[![Teaser video](https://img.youtube.com/vi/TdwPfwsGX3I/default.jpg)](https://youtu.be/TdwPfwsGX3I)
+<!-- [![Teaser video](https://img.youtube.com/vi/TdwPfwsGX3I/default.jpg)](https://youtu.be/TdwPfwsGX3I) -->
+https://user-images.githubusercontent.com/33533196/236384202-c822f1fb-c7a0-4023-810e-a7995982ce35.mp4
 
 ***Controllable Visual-Tactile Synthesis*** <br>
 [Ruihan Gao](https://ruihangao.com/), [Wenzhen Yuan](http://robotouch.ri.cmu.edu/yuanwz/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
@@ -21,7 +22,6 @@ arXiv, 2023
 <br>
 
 **Please see our website and paper for more interactive and comprehensive results**
-
 
 <!-- ## Updates 
 * [05/04] InitialWe release the [visual-tactile-syn arxiv](https://arxiv.org/abs/), which synthesizes synchronized visual-tactile output from a sketch/text input and renders the multi-modal output on a surface haptic device TanvasTouch®. -->
@@ -55,6 +55,8 @@ Example of preprocessed data:
 <img src="assets/figure4_sample_data.png" alt=“figure4_sample_data” width="800">
 <br>
 
+https://user-images.githubusercontent.com/33533196/236384165-7c451ac4-19f6-4001-8bd7-0273e94cf993.mp4
+
 Use the following commands to download and unzip the dataset. <br>
 (1) Download the preprocessed data from Google Drive via the following command: 
 (install `gdown` and `unzip` if you haven't done so) <br>
@@ -70,6 +72,9 @@ unzip -q TouchClothing_dataset.zip
 Note: 
 * in case there is "access denied" error, try `pip install -U --no-cache-dir gdown --pre` and run `gdown` command again. [Ref here](https://github.com/wkentaro/gdown/issues/43#issuecomment-621356443)
 * use `-q` flag to `unzip` to suppress the log as it could be quite long
+
+### Method
+https://user-images.githubusercontent.com/33533196/236384238-cc8b0238-871f-499c-8b26-2c5db33aa778.mp4
 
 ### Pre-trained models
 We provide the pretrained models for our method and several baselines included in our paper. For each method, we provide 20 models, one for each object in our <i>TouchClothing</i> dataset.
