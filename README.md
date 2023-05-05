@@ -2,7 +2,7 @@
 
 ### [Project Page](https://visual-tactile-synthesis.github.io/) | [Paper](https://arxiv.org/abs/2305.03051)
 
-We present a conditional image-to-image approach to synthesize the visual appearance and tactile geometry of different materials, given a handcrafted or DALL⋅E 2 sketch. We then render the outputs on a surface haptic device like TanvasTouch® where users can slide on the screen to feel the rendered textures.
+**Content creation beyond visual outputs**: We present an image-to-image method to synthesize the visual appearance and tactile geometry of different materials, given a handcrafted or DALL⋅E 2 sketch. We then render the outputs on a surface haptic device like TanvasTouch® where users can slide on the screen to feel the rendered textures.
 
 [![Teaser video](https://img.youtube.com/vi/TdwPfwsGX3I/default.jpg)](https://youtu.be/TdwPfwsGX3I)
 
@@ -46,14 +46,13 @@ conda activate SKIT
 ```
 
 ### Dataset
-We provide the preprocessed data for our <i>TouchClothing</i> dataset, which contains 20 pieces of garments of various shapes and textures. <br>
-20 Objects included in <i>TouchClothing</i> dataset:
+We provide the preprocessed data for our <i>TouchClothing</i> dataset, which contains 20 pieces of garments of various shapes and textures. Here are 20 objects in <i>TouchClothing</i> dataset:
 <br>
-<img src="assets/figure2_dataset.png" alt=“figure2_dataset” width="400">
+<img src="assets/figure2_dataset.png" alt=“figure2_dataset” width="800">
 <br>
 Example of preprocessed data:
 <br>
-<img src="assets/figure4_sample_data.png" alt=“figure4_sample_data” width="400">
+<img src="assets/figure4_sample_data.png" alt=“figure4_sample_data” width="800">
 <br>
 
 Use the following commands to download and unzip the dataset. <br>
