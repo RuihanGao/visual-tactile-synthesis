@@ -19,13 +19,13 @@ We show an example of our visual-tactile synthesis. The tactile output is shown 
 
 ### Colored 3D mesh for single object
 We can also render the synthesized results as a colored 3D mesh. The meshes are exaggerated in z direction to show fine textures. <br>
-<img src="assets/rendered_mesh_GreenTee_GreenTee.gif" alt="mesh_GreenTee" width="300">
-<img src="assets/rendered_mesh_WhiteTshirt_WhiteTshirt.gif" alt="mesh_WhiteTshirt" width="300">
-<img src="assets/rendered_mesh_NavyHoodie_NavyHoodie.gif" alt="mesh_NavyHoodie" width="300">
+<img src="assets/rendered_mesh_GreenTee_GreenTee.gif" alt="mesh_GreenTee" width="250">
+<img src="assets/rendered_mesh_WhiteTshirt_WhiteTshirt.gif" alt="mesh_WhiteTshirt" width="250">
+<img src="assets/rendered_mesh_NavyHoodie_NavyHoodie.gif" alt="mesh_NavyHoodie" width="250">
 <br>
-<img src="assets/rendered_mesh_FlowerJeans_FlowerJeans.gif" alt="mesh_FlowerJeans" width="300">
-<img src="assets/rendered_mesh_PurplePants_PurplePants.gif" alt="mesh_PurplePants" width="300">
-<img src="assets/rendered_mesh_FlowerShorts_FlowerShorts.gif" alt="mesh_FlowerShorts" width="300">
+<img src="assets/rendered_mesh_FlowerJeans_FlowerJeans.gif" alt="mesh_FlowerJeans" width="250">
+<img src="assets/rendered_mesh_PurplePants_PurplePants.gif" alt="mesh_PurplePants" width="250">
+<img src="assets/rendered_mesh_FlowerShorts_FlowerShorts.gif" alt="mesh_FlowerShorts" width="250">
 <br>
 
 ### Swapping different sketches & materials
