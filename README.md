@@ -92,7 +92,7 @@ Note:
 * use `-q` flag to `unzip` to suppress the log as it could be quite long
 
 ### Method
-https://user-images.githubusercontent.com/33533196/236384238-cc8b0238-871f-499c-8b26-2c5db33aa778.mp4
+https://user-images.githubusercontent.com/33533196/236648641-4597ef2d-8e2f-4a47-97e9-2ce39e12f950.mp4
 
 ### Pre-trained models
 We provide the pretrained models for our method and several baselines included in our paper. For each method, we provide 20 models, one for each object in our <i>TouchClothing</i> dataset.
