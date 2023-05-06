@@ -13,6 +13,20 @@ Carnegie Mellon University<br>
 arXiv, 2023
 
 
+### Visual-tactile synthesis
+We show an example of our visual-tactile synthesis. The tactile output is shown in the 3D height map. The patches below correspond to bounding boxes shown in the sketch input. Please see our paper for more results.
+<img src="assets/FlowerJeans_patches.png" alt=FlowerJeans_patches width="800">
+
+### Colored 3D mesh for single object
+We can also render the synthesized results as a colored 3D mesh. The meshes are exaggerated in z direction to show fine textures.
+<img src="assets/rendered_mesh_GreenTee_GreenTee.gif" alt="mesh_GreenTee" width="300">
+<img src="assets/rendered_mesh_WhiteTshirt_WhiteTshirt.gif" alt="mesh_WhiteTshirt" width="300">
+<img src="assets/rendered_mesh_NavyHoodie_NavyHoodie.gif" alt="mesh_NavyHoodie" width="300">
+<br>
+<img src="assets/rendered_mesh_FlowerJeans_FlowerJeans.gif" alt="mesh_FlowerJeans" width="300">
+<img src="assets/rendered_mesh_PurplePants_PurplePants.gif" alt="mesh_PurplePants" width="300">
+<img src="assets/rendered_mesh_FlowerShorts_FlowerShorts.gif" alt="mesh_FlowerShorts" width="300">
+
 ### Swapping different sketches & materials
 <img src="assets/figure7_swap_sketch.png" alt=figure7_swap_sketch width="800">
 <br>
@@ -58,15 +72,18 @@ Example of preprocessed data:
 https://user-images.githubusercontent.com/33533196/236384165-7c451ac4-19f6-4001-8bd7-0273e94cf993.mp4
 
 Use the following commands to download and unzip the dataset. <br>
-(1) Download the preprocessed data from Google Drive via the following command: 
-(install `gdown` and `unzip` if you haven't done so) <br>
-Total size: 580M. <br>
+(0) Install `gdown` and `unzip` as follows if you haven't done so.
 ```
 pip install gdown
 sudo apt install unzip
-gdown "https://drive.google.com/uc?export=download&id=1VlgYpDSxQP70sYpFERHuzKnTNIH4Gf4s"
-unzip -q TouchClothing_dataset.zip
 ```
+(1) Download the preprocessed data from Google Drive via the following command: 
+Total size: 580M. <br>
+```
+bash scripts/download_TouchClothing_dataset.sh
+```
+<br>
+
 (2) Put the unzipped folder `datasets` in the code repo.
 
 Note: 
