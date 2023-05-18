@@ -335,7 +335,7 @@ class SinSKITGModel(BaseModel):
             dataroot="./datasets/singleskit_FlowerShorts_padded_1800_x1/",
         )
 
-        verbose_freq = 3  # default is 100, set to 3 for debugging
+        verbose_freq = 100  # default is 100, set to 3 for debugging
         if is_train:
             parser.set_defaults(
                 preprocess="crop",  # "zoom_and_crop"

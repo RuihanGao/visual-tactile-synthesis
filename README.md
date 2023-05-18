@@ -52,12 +52,14 @@ We are plan to release our code and dataset in the following steps:
 - [ ] Instructions on how to create new test data.
 
 ## Getting Started
-We tested our code with Python 3.8 and [Pytorch](https://pytorch.org/) 1.11.0.
+We tested our code with Python 3.8 and [Pytorch](https://pytorch.org/) 1.11.0. (We recommend installing PyTorch separately to avoid package conflicts.)
 ```
-git clone https://github.com/RuihanGao/Visual-Tactile-Syn.git
-cd Visual-Tactile-Syn
-conda env create -f environment.yml
-conda activate SKIT
+git clone https://github.com/RuihanGao/visual-tactile-synthesis.git
+cd visual-tactile-synthesis
+conda create -n VTS python=3.8
+conda activate VTS
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+pip install -r requirements.txt
 ```
 
 ### Dataset
