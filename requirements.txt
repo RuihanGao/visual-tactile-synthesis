@@ -10,3 +10,4 @@ gspread
 oauth2client
 wandb
 lpips
+tabulate

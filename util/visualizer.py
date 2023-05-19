@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import skimage.io as io
 
-from . import html, util
+from . import myhtml, util
 
 try:
     import wandb
@@ -40,7 +40,7 @@ def save_images(
     Save images to the disk.
 
     Parameters:
-        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see html.py for more details)
+        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see myhtml.py for more details)
         visuals (OrderedDict)    -- an ordered dictionary that stores (name, images (either tensor or numpy) ) pairs
         image_path (str)         -- the string is used to create image paths
         aspect_ratio (float)     -- the aspect ratio of saved images
@@ -154,7 +154,7 @@ def save_images_org_size(webpage, visuals, image_path, aspect_ratio=None):
     """Save images to the disk.
 
     Parameters:
-        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see html.py for more details)
+        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see myhtml.py for more details)
         visuals (OrderedDict)    -- an ordered dictionary that stores (name, images (either tensor or numpy) ) pairs
         image_path (str)         -- the string is used to create image paths
         aspect_ratio (float)     -- the aspect ratio of saved images
@@ -227,7 +227,7 @@ class Visualizer:
         # if opt.phase == 'test':
         # create a webpage for viewing the results
 
-        # create dir for saving raw arrays even if we don't use html
+        # create dir for saving raw arrays even if we don't use myhtml
         self.web_dir = os.path.join(opt.checkpoints_dir, opt.name, "web")
         self.img_dir = os.path.join(self.web_dir, "images")
         print("create web directory %s..." % self.web_dir)
@@ -365,7 +365,7 @@ class Visualizer:
                 util.save_image(image_numpy, img_path)
 
             # update website
-            webpage = html.HTML(self.web_dir, "Experiment name = %s" % self.name, refresh=0)
+            webpage = myhtml.HTML(self.web_dir, "Experiment name = %s" % self.name, refresh=0)
             for n in range(epoch, 0, -1):
                 webpage.add_header("epoch [%d]" % n)
                 ims, txts, links = [], [], []

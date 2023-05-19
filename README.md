@@ -141,7 +141,8 @@ Or, if you are using `tmux_launcher`, use the following command.
 material_idx=0
 python -m experiments SingleG_AllMaterials_baseline_ours test $material_idx
 ```
-The results will be stored in the `results` directory.
+The results will be stored in the `results` directory. <br>
+To compile the quantitative metrics of the tested method in a tabulated format, run `bash scripts/compile_eval_metrics_sinskitG.sh`. For each method, it retrieves the `eval_metrics.pkl` file of all materials and take the average. Modify `materials` list in `util/compile_eval_metrics_sinskitG.py` and the bash script accordingly.
 
 
 ## Citation

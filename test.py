@@ -4,7 +4,7 @@ from options.test_options import TestOptions
 from data import create_dataset
 from models import create_model
 from util.visualizer import save_images
-from util import html
+from util import myhtml
 import util.util as util
 from util.visualizer import Visualizer
 import pickle
@@ -88,7 +88,7 @@ if __name__ == '__main__':
         save_metric_index = True if opt.model == 'skitG' else False
         web_dir = visualizer.save_current_metrics(eval_metrics, return_web_dir=True, save_metrics=save_metrics, save_metric_index=save_metric_index, i=i)
         # save sample images
-        webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
+        webpage = myhtml.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
         img_path = model.get_image_paths() # get image paths
         save_images(webpage, visuals, img_path, width=opt.display_winsize, use_wandb=opt.use_wandb, save_raw_gxgy=True, padded_size=opt.padded_size, save_raw_arr_vis=opt.save_raw_arr_vis, save_style_image_name=save_style_image_name, style_image_name=style_image_name)
 
