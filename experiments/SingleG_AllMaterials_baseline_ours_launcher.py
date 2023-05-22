@@ -2,12 +2,15 @@ import os
 
 from .tmux_launcher import Options, TmuxLauncher
 
+##### Define options for each experiment, and then set training and testing commonds. #####
 """
-Sample commands: 
-training: python -m experiments SingleG_AllMaterials_baseline_ours launch 0
-testing: python -m experiments SingleG_AllMaterials_baseline_ours launch_test 0
-Replace the index 0 by any other number or 'all' to run multiple experiments at once.
-Use `launch` to run multiple training scripts at once and `launch_test` to run multiple testing scripts
+Laucher to run our method (single-object model).
+
+Sample commands: python -m experiments SingleG_AllMaterials_baseline_ours launch 0,1
+python -m experiments SingleG_AllMaterials_baseline_ours launch_test 0,1
+
+Replace the index 0,1 by any other number or 'all' to run multiple experiments at once.
+Use `launch` to run multiple training scripts at once and `launch_test` to run multiple testing scripts at once
 """
 
 
@@ -51,7 +54,7 @@ class Launcher(TmuxLauncher):
                     model="sinskitG",
                     dataroot=f"./datasets/singleskit_{material}_padded_1800_x1/",
                     # gpu_ids=-1, # use CPU
-                    # data_len=3, # set to a small number for debugging
+                    data_len=3,  # set to a small number for debugging
                 )
             )
 
@@ -81,7 +84,11 @@ class Launcher(TmuxLauncher):
                 + str(
                     opt.set(
                         eval="",
-                        # save_raw_arr_vis=True,
+                        preprocess="none",
+                        data_len=1,
+                        num_touch_patch_for_logging=100,
+                        batch_size_G2=100,
+                        save_raw_arr_vis=True,
                     )
                 )
             )

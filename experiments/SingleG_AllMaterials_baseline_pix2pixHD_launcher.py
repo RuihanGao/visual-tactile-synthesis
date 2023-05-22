@@ -1,11 +1,15 @@
 import os
-from lib2to3.pgen2.literals import evalString
-from optparse import Option
 
 from .tmux_launcher import Options, TmuxLauncher
 
 """
-This launcher runs the pix2pix experiments for all materials. Used as comparison to the SingleG_AllMaterials_baseline_ours_launcher.py
+Laucher to run pix2pixHD baseline.
+
+Sample commands: python -m experiments SingleG_AllMaterials_baseline_pix2pixHD launch 0,1
+python -m experiments SingleG_AllMaterials_baseline_pix2pixHD launch_test 0,1
+
+Replace the index 0,1 by any other number or 'all' to run multiple experiments at once.
+Use `launch` to run multiple training scripts at once and `launch_test` to run multiple testing scripts at once
 """
 
 
@@ -44,8 +48,9 @@ class Launcher(TmuxLauncher):
             option_list.append(
                 Options(
                     name=f"{material}_pix2pixHD_baseline",
-                    # use_wandb="",
+                    use_wandb="",
                     model="pix2pixHD",
+                    netD="multiscale",
                     dataset="patchskit",
                     dataroot=f"./datasets/singleskit_{material}_padded_1800_x1/",
                 )
@@ -78,6 +83,7 @@ class Launcher(TmuxLauncher):
                     opt.set(
                         eval="",
                         preprocess="none",
+                        data_len=1,
                         num_touch_patch_for_logging=100,
                         batch_size_G2=100,
                         save_raw_arr_vis=True,
