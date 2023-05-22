@@ -1,4 +1,3 @@
-"""This module contains simple helper functions """
 from __future__ import print_function
 
 import argparse
@@ -14,6 +13,10 @@ import numpy as np
 import torch
 import torchvision
 from PIL import Image
+
+"""
+This scripts contains simple helper functions
+"""
 
 
 def str2bool(v):
@@ -59,14 +62,12 @@ def tensor2im(input_image, imtype=np.uint8, convert_gray_imgs=False, colormap="v
         input_image (tensor) --  the input image tensor array
         imtype (type)        --  the desired type of the converted numpy array
     """
-    # print('In tensor2im', input_image.shape)
-
     if not isinstance(input_image, np.ndarray):
         if isinstance(input_image, torch.Tensor):  # get the data from a variable
             if len(input_image.shape) == 2:
                 input_image = torch.unsqueeze(
                     torch.unsqueeze(input_image, 0), 0
-                )  # for T data, unsqueeze in channel dimension
+                )  # if it's tactile data, unsqueeze it at the channel dimension
             if len(input_image.shape) == 3:
                 input_image = torch.unsqueeze(input_image, 0)
             image_tensor = input_image.data
@@ -101,7 +102,7 @@ def tensor2arr(input_image, imtype=np.float64, convert2RGB=False, verbose=False)
             if len(input_image.shape) == 2:
                 input_image = torch.unsqueeze(
                     torch.unsqueeze(input_image, 0), 0
-                )  # for T data, unsqueeze in channel dimension
+                )  # if it's tactile data, unsqueeze it at the channel dimension
             if len(input_image.shape) == 3:
                 input_image = torch.unsqueeze(input_image, 0)
             image_tensor = input_image.data
@@ -111,7 +112,7 @@ def tensor2arr(input_image, imtype=np.float64, convert2RGB=False, verbose=False)
                         torch.min(image_tensor), torch.max(image_tensor)
                     )
                 )
-            image_numpy = image_tensor[0].clamp(-1.0, 1.0).cpu().float().numpy()  # convert it into a numpy array
+            image_numpy = image_tensor[0].clamp(-1.0, 1.0).cpu().float().numpy()
         else:
             raise NotImplementedError("unknown type of input_iamge", type(input_image))
     else:
@@ -161,7 +162,6 @@ def save_image(image_numpy, image_path, aspect_ratio=1.0):
         image_pil = image_pil.resize((h, int(w * aspect_ratio)), Image.BICUBIC)
     elif aspect_ratio < 1.0:
         image_pil = image_pil.resize((int(h / aspect_ratio), w), Image.BICUBIC)
-    # print("save pil image", image_path, image_pil.width, image_pil.height)
     image_pil.save(image_path)
 
 
@@ -235,17 +235,11 @@ def correct_resize(t, size, mode=Image.BICUBIC):
 def plot_grad_flow(named_parameters, net="net"):
     ave_grads = []
     layers = []
-    # print('named_parameters')
     for n, p in named_parameters:
-        # print('name:', n)
-        # print('parameter', type(p))
         if (p.requires_grad) and ("bias" not in n) and p.grad is not None:
-            # grad = p.grad.view(-1)
-            # print('save grad', type(grad), grad.shape)
             layers.append(n)
             ave_grads.append(p.grad.abs().mean().cpu())
         else:
-            # print('skip')
             pass
     plt.plot(ave_grads, alpha=0.3, color="b")
     plt.hlines(0, 0, len(ave_grads) + 1, linewidth=1, color="k")

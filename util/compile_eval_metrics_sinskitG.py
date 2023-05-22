@@ -19,7 +19,7 @@ def retrieve_final_epoch(subdir, latest_epoch=400):
     Retrieve the final epoch for a given subdir. If the subdir contains a 'best' checkpoint, return 'best'. Otherwise, return the latest epoch.
 
     Args:
-        subdir (_type_): directory of the model's test results.
+        subdir (str): directory of the model's test results.
         latest_epoch (int, optional): the maximum number of epochs the model has been trained. Defaults to 400.
 
     Returns:
@@ -183,29 +183,28 @@ def main(args):
 
     """
     # List of object models. There are 20 object in our dataset. For single-object model, we average the metrics over 20 objects.
-    # materials = [
-    #     "BlackJeans",
-    #     "BluePants",
-    #     "BlueSports",
-    #     "BrownVest",
-    #     "ColorPants",
-    #     "ColorSweater",
-    #     "DenimShirt",
-    #     "FlowerJeans",
-    #     "FlowerShorts",
-    #     "GrayPants",
-    #     "GreenShirt",
-    #     "GreenSkirt",
-    #     "GreenSweater",
-    #     "GreenTee",
-    #     "NavyHoodie",
-    #     "PinkShorts",
-    #     "PurplePants",
-    #     "RedShirt",
-    #     "WhiteTshirt",
-    #     "WhiteVest",
-    # ]
-    materials = ["BlackJeans"] # Note: add all materials after running test.py
+    materials = [
+        "BlackJeans",
+        "BluePants",
+        "BlueSports",
+        "BrownVest",
+        "ColorPants",
+        "ColorSweater",
+        "DenimShirt",
+        "FlowerJeans",
+        "FlowerShorts",
+        "GrayPants",
+        "GreenShirt",
+        "GreenSkirt",
+        "GreenSweater",
+        "GreenTee",
+        "NavyHoodie",
+        "PinkShorts",
+        "PurplePants",
+        "RedShirt",
+        "WhiteTshirt",
+        "WhiteVest",
+    ]
 
     model_base_names = [f"{material}{args.method_postfix}" for material in materials]
     all_subdirs = [f.path for f in os.scandir(args.results_dir) if f.is_dir()]
@@ -218,14 +217,10 @@ def main(args):
         num_materials=len(materials),
         column_names=[
             "Method",
-            "m_I_PSNR",
-            "m_I_SSIM",
             "m_I_LPIPS",
             "m_I_SIFID",
             "m_T_LPIPS",
             "m_T_SIFID",
-            "m_T_AE",
-            "m_T_MSE",
         ],
         results_dir=args.results_dir,
         upload_GoogleSheet=args.upload_GoogleSheet,

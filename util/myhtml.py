@@ -3,6 +3,10 @@ import os
 import dominate
 from dominate.tags import a, br, h3, img, meta, p, table, td, tr
 
+"""
+Create a HTML class to store images for each method as a webpage for visualization and comparison.
+"""
+
 
 class HTML:
     """This HTML class allows us to save images and write texts into a single HTML file.

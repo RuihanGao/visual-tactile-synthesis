@@ -90,7 +90,7 @@ if __name__ == '__main__':
         # save sample images
         webpage = myhtml.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
         img_path = model.get_image_paths() # get image paths
-        save_images(webpage, visuals, img_path, width=opt.display_winsize, use_wandb=opt.use_wandb, save_raw_gxgy=True, padded_size=opt.padded_size, save_raw_arr_vis=opt.save_raw_arr_vis, save_style_image_name=save_style_image_name, style_image_name=style_image_name)
+        save_images(webpage, visuals, img_path, width=opt.display_winsize, use_wandb=opt.use_wandb, save_raw_gxgy=True, save_raw_arr_vis=opt.save_raw_arr_vis, save_style_image_name=save_style_image_name, style_image_name=style_image_name)
 
     if opt.model == 'skitG':
         # Since the metrics are computed for each material, we need to compute the mean of the metrics.

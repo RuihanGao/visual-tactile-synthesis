@@ -2,6 +2,10 @@ import random
 
 import torch
 
+"""
+Method inherited from CUT repo, used by pix2pixHD and spade baselines.
+"""
+
 
 class ImagePool:
     """This class implements an image buffer that stores previously generated images.

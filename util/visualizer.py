@@ -22,6 +22,10 @@ if sys.version_info[0] == 2:
 else:
     VisdomExceptionBase = ConnectionError
 
+"""
+This script creates the Visualizer class, which is used to display/save images and print/save logging information, together with helper functions.
+"""
+
 
 def save_images(
     webpage,
@@ -31,22 +35,25 @@ def save_images(
     width=256,
     use_wandb=False,
     save_raw_gxgy=False,
-    padded_size=1800,
     save_raw_arr_vis=False,
     save_style_image_name=False,
     style_image_name=None,
 ):
     """
-    Save images to the disk.
+    Save images stored in 'visuals' to the HTML file specified by 'webpage', and optionally save images to wandb
 
-    Parameters:
-        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see myhtml.py for more details)
-        visuals (OrderedDict)    -- an ordered dictionary that stores (name, images (either tensor or numpy) ) pairs
-        image_path (str)         -- the string is used to create image paths
-        aspect_ratio (float)     -- the aspect ratio of saved images
-        width (int)              -- the images will be resized to width x width
+    Args:
+        webpage (the HTML class): the HTML webpage class that stores these imaegs (see html.py for more details)
+        visuals (OrderedDict): an ordered dictionary that stores (name, images (either tensor or numpy) ) pairs
+        image_path (str): the string is used to create image paths
+        aspect_ratio (float): the aspect ratio of saved images
+        width (int): the images will be resized to width x width
+        use_wandb (bool): option to use wandb to log images
+        save_raw_gxgy (bool): option to save raw gx and gy as a .npz file
+        save_raw_arr_vis (bool): option to save raw gx and gy in .exr and .npy format
+        save_style_image_name (bool): option to save style image name in the image name
+        style_image_name (str): style image name, used if save_style_image_name is True
 
-    This function will save images stored in 'visuals' to the HTML file specified by 'webpage'.
     """
     image_dir = webpage.get_image_dir()
     short_path = ntpath.basename(image_path[0])
@@ -61,7 +68,7 @@ def save_images(
 
     # save numpy array for gx and gy
     if save_raw_gxgy:
-        # save both generated fake_gx, fake_gy and generated and real gx, gy patches, to verify 3D reconstruction
+        # For tactile data, save both generated fake_gx, fake_gy and generated and real gx, gy patches, to verify 3D reconstruction
         keyword_dict = {}
         for label, im_data in visuals.items():
             if "gx" in label or "gy" in label:
@@ -79,13 +86,11 @@ def save_images(
             json_path = os.path.join(image_dir, label + ".json")
 
             coords_list = im_data.astype(int)
-            # coords_data = {"coords":[{'x': x, 'y': y} for x, y in coords_list]}
             xs = coords_list[:, 0].tolist()
             ys = (
                 1536 - coords_list[:, 1]
             ).tolist()  # the website image is anchored at bottom left corner, so need to flip y
             coords_data = {"coords": {"x": xs, "y": ys, "len": len(xs)}}
-            # print(coords_data)
             with open(json_path, "w") as f:
                 json.dump(coords_data, f)
             continue
@@ -99,12 +104,9 @@ def save_images(
         txts.append(label)
         links.append(image_name)
 
-        # print(f"In visulizer, self.use_html {self.use_html}, self.saved {self.saved}, save_raw_arr_vis {save_raw_arr_vis}, save_result {save_result}")
         if save_raw_arr_vis:
             if "bb" in label or "coord" in label:
-                # print(f"skip visual label {label}")
                 continue
-            # 2023-03-05: save raw arr as npy and exr files for gx and gy
             if "gx" in label or "gy" in label:
                 image_raw_arr = util.tensor2arr(
                     im_data, imtype=np.float32
@@ -116,20 +118,16 @@ def save_images(
                 else:
                     if image_raw_arr.shape[0] != 3 and image_raw_arr.shape[2] == 3:
                         # already transposed
-                        #    print(f"label {label} already transposed, pass to save image")
                         pass
                     else:
                         assert (
                             image_raw_arr.shape[0] == 3
                         ), f"label {label} raw arr has abnormal shapeshape {image_raw_arr.shape}"
                         image_raw_arr = image_raw_arr.transpose(1, 2, 0)
-                # print(f"save image {label} to png and exr, shape {image_raw_arr.shape} range {np.min(image_raw_arr)} {np.max(image_raw_arr)} dtype {image_raw_arr.dtype}")
                 np.save(img_npy_path, image_raw_arr)
                 io.imsave(
                     img_exr_path, image_raw_arr, check_contrast=False
                 )  # set check_contrast to False to avoid warning
-                # print(f"check saved image {img_path} and raw arr {img_npy_path} and {img_exr_path}")
-                # raise ValueError("stop here to check")
 
     webpage.add_images(ims, txts, links, width=width)
 
@@ -150,34 +148,9 @@ def save_images(
         wandb.log({"Result": result_table})
 
 
-def save_images_org_size(webpage, visuals, image_path, aspect_ratio=None):
-    """Save images to the disk.
-
-    Parameters:
-        webpage (the HTML class) -- the HTML webpage class that stores these imaegs (see myhtml.py for more details)
-        visuals (OrderedDict)    -- an ordered dictionary that stores (name, images (either tensor or numpy) ) pairs
-        image_path (str)         -- the string is used to create image paths
-        aspect_ratio (float)     -- the aspect ratio of saved images
-        width (int)              -- the images will be resized to width x width
-
-    This function will save images stored in 'visuals' to the HTML file specified by 'webpage'.
-    """
-
-    raise ValueError("Ruihan defined this func, need to check compatibility with wandb visualization")
-    image_dir = webpage.get_image_dir()
-    short_path = ntpath.basename(image_path[0])
-    name = os.path.splitext(short_path)[0]
-    for label, im_data in visuals.items():
-        im = util.tensor2im(im_data)
-        print("label", label, "size", im.shape)
-        image_name = "%s/%s_org.png" % (label, name)
-        os.makedirs(os.path.join(image_dir, label), exist_ok=True)
-        save_path = os.path.join(image_dir, image_name)
-        util.save_image(im, save_path, aspect_ratio=aspect_ratio)
-
-
 class Visualizer:
-    """This class includes several functions that can display/save images and print/save logging information.
+    """
+    This class includes several functions that can display/save images and print/save logging information.
 
     It uses a Python library 'visdom' for display, and a Python library 'dominate' (wrapped in 'HTML') for creating HTML files with images.
     """
@@ -223,11 +196,8 @@ class Visualizer:
             self.wandb_run._label(repo="SKIT")
 
         # if self.use_html:  # create an HTML object at <checkpoints_dir>/web/; images will be saved under <checkpoints_dir>/web/images/
-        # TODO: check the train and test option settings again to ensure consistency
-        # if opt.phase == 'test':
-        # create a webpage for viewing the results
 
-        # create dir for saving raw arrays even if we don't use myhtml
+        # create dir for saving raw arrays even if we don't use html
         self.web_dir = os.path.join(opt.checkpoints_dir, opt.name, "web")
         self.img_dir = os.path.join(self.web_dir, "images")
         print("create web directory %s..." % self.web_dir)
@@ -258,8 +228,6 @@ class Visualizer:
             epoch (int) - - the current epoch
             save_result (bool) - - if save the current results to an HTML file
         """
-        # print("In display_current_results")
-
         if self.display_id > 0:  # show images in the browser using visdom
             ncols = self.ncols
             if ncols > 0:  # show all the images in one visdom panel
@@ -272,6 +240,7 @@ class Visualizer:
                     w,
                     h,
                 )  # create a table css
+
                 # create a table of images.
                 title = self.name
                 label_html = ""
@@ -283,10 +252,9 @@ class Visualizer:
                 for label, image in visuals.items():
                     print("label", label)
                     print("image type {} shape {}".format(type(visuals.items()), image.shape))
-                    # TODO: hard coder here. real_T can have len > 1
                     if len(image) > 1:
                         image = image[0]
-                    # TODO: hard code here.
+
                     if len(image) == 0:
                         # empty list for real_gx, real_gy, fake_gx, fake_gy
                         continue
@@ -326,10 +294,7 @@ class Visualizer:
                     self.create_visdom_connections()
 
         if self.use_wandb:
-            # print('Using wandb')
             columns = [key for key, _ in visuals.items()]
-            # print('wandb columns')
-            # print(columns)
             columns.insert(0, "epoch")
             result_table = wandb.Table(columns=columns)
             table_row = [epoch]
@@ -339,8 +304,6 @@ class Visualizer:
                 wandb_image = wandb.Image(image_numpy)
                 table_row.append(wandb_image)
                 ims_dict[label] = wandb_image
-            # print('wandb log ims_dict')
-            # print(ims_dict)
             if step is None:
                 self.wandb_run.log(ims_dict)
             else:
@@ -349,8 +312,6 @@ class Visualizer:
             if epoch != self.current_epoch:  # update the table for each epoch
                 self.current_epoch = epoch
                 result_table.add_data(*table_row)
-                # print('wandb log result table')
-                # print(result_table)
                 if step is None:
                     self.wandb_run.log({"Result": result_table})
                 else:
@@ -415,7 +376,6 @@ class Visualizer:
                 except VisdomExceptionBase:
                     self.create_visdom_connections()
 
-        # print(losses)
         if self.use_wandb:
             if step is None:
                 # use default step index, which increases each time `wandb.log` is called
@@ -474,8 +434,6 @@ class Visualizer:
             if use_visdom:
                 raise NotImplementedError("Plot for metrics hasn't been implemented for visdom display")
 
-        # print("wandb log metrics")
-        # print(eval_metrics)
         if self.use_wandb:
             if step is None:
                 self.wandb_run.log(eval_metrics)
