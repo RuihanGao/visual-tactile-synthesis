@@ -11,3 +11,8 @@ oauth2client
 wandb
 lpips
 tabulate
+
+GPUtil
+opencv-python
+scikit-image
+torchmetrics
