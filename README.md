@@ -10,7 +10,7 @@ https://user-images.githubusercontent.com/33533196/236384202-c822f1fb-c7a0-4023-
 ***Controllable Visual-Tactile Synthesis*** <br>
 [Ruihan Gao](https://ruihangao.com/), [Wenzhen Yuan](http://robotouch.ri.cmu.edu/yuanwz/), [Jun-Yan Zhu](https://www.cs.cmu.edu/~junyanz/)<br>
 Carnegie Mellon University<br>
-arXiv, 2023
+ICCV, 2023
 
 
 ### Visual-tactile synthesis
