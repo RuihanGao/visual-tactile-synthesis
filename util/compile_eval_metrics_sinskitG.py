@@ -1,8 +1,9 @@
 import argparse
 import os
-import sys
 import pickle
 import re
+import sys
+
 import pandas as pd
 from tabulate import tabulate
 
@@ -11,7 +12,7 @@ current = os.path.dirname(os.path.realpath(__file__))
 parent_directory = os.path.dirname(current)
 print(f"check parent directory: {parent_directory}")
 sys.path.append(parent_directory)
-from utils import create_log_dir_by_date, upload_df_to_GoogleSheet
+from myutils import create_log_dir_by_date, upload_df_to_GoogleSheet
 
 
 def retrieve_final_epoch(subdir, latest_epoch=400):
@@ -162,6 +163,7 @@ def compile_metrics_for_exp(
     if upload_GoogleSheet:
         upload_df_to_GoogleSheet(
             df,
+            csv_path,
             sheetName=sheetName,
             json_keyfile_name=json_keyfile_name,
             spreadsheetName=spreadsheetName,

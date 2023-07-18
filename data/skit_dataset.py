@@ -223,7 +223,7 @@ class SkitDataset(SingleSkitDataset):
             After preprocessing, data are cached in `self.data_dict` attribute.
         """
 
-        print(f"Preproccess data for skit_dataset and save them in cache, len {len(self)}...")
+        print(f"Preprocess data for skit_dataset and save them in cache, len {len(self)}...")
         preprocess_start_time = time.time()
 
         # load parameter settings

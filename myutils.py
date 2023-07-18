@@ -30,13 +30,19 @@ def create_log_dir_by_date(parent_dir=".", log_dir="logs"):
 
 
 def upload_df_to_GoogleSheet(
-    df, sheetName=None, json_keyfile_name="skit_GoogleCloud.json", spreadsheetName="CSV-to-Google-Sheet", verbose=False
+    df,
+    csv_path,
+    sheetName=None,
+    json_keyfile_name="skit_GoogleCloud.json",
+    spreadsheetName="CSV-to-Google-Sheet",
+    verbose=False,
 ):
     """
     Upload the dataframe to Google sheet online .
 
     Args:
-        df (pd.DataFrame): dataframe of the metrics of each model. If sheetName is not None, also upload the dataframe to Google sheet as csv file.
+        df (pd.DataFrame): dataframe of the metrics of each model. If sheetName is not None, also upload the dataframe to Google sheet as csv file. (probably redundant since we read the csv file in the next step)
+        csv_path (str): path to the input csv file.
         sheetName (str, optional): sheet name for Google sheet. Defaults to None.
         json_keyfile_name (str, optional): json key file name. Defaults to 'skit_GoogleCloud.json'. Replace it by your credential file name here.
         spreadsheetName (str, optional): name for the Goole SpreadSheet. Defaults to 'CSV-to-Google-Sheet'.

@@ -82,7 +82,7 @@ def save_images(
     for label, im_data in visuals.items():
         if "patch_coords" in label:  # shape (N,2) (center_x, center_y) patch_size = 32
             # save the coords as json file
-            print("find patch_coords, save as pickle file, label is", label)
+            # print("find patch_coords, save as pickle file, label is", label)
             json_path = os.path.join(image_dir, label + ".json")
 
             coords_list = im_data.astype(int)

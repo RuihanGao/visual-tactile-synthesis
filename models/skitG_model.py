@@ -482,11 +482,11 @@ class SKITGModel(BaseModel):
 
         print("Define style encoding")
         if hasattr(opt, "use_style_code") and opt.use_style_code:
-            self.net_clip, self.preprocess_clip = clip.load("ViT-B/32", device=self.device)
-        self.net_clip, _ = clip.load("ViT-B/32", jit=False, device=self.device)
-        self.net_clip = self.net_clip.visual
-        self.net_clip.eval()
-        self.net_clip.requires_grad = False
+            self.net_style, self.preprocess_clip = clip.load("ViT-B/32", device=self.device)
+        self.net_style, _ = clip.load("ViT-B/32", jit=False, device=self.device)
+        self.net_style = self.net_style.visual
+        self.net_style.eval()
+        self.net_style.requires_grad = False
 
         self.use_cGAN_G2_S = hasattr(opt, "use_cGAN_G2_S") and opt.use_cGAN_G2_S
         self.use_cGAN_G2_I = hasattr(opt, "use_cGAN_G2_I") and opt.use_cGAN_G2_I
@@ -1293,7 +1293,7 @@ class SKITGModel(BaseModel):
 
         if hasattr(self.opt, "use_style_code") and self.opt.use_style_code:
             # load clip model to generate style code
-            self.style_code = self.net_clip(self.style_I.half())
+            self.style_code = self.net_style(self.style_I.half())
         else:
             self.style_code = None
         if hasattr(self.opt, "use_positional_encoding") and self.opt.use_positional_encoding:

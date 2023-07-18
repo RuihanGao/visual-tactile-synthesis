@@ -7,7 +7,7 @@ from PIL import Image
 from skimage import filters
 
 import util.util as util
-import utils
+import myutils
 
 """
 This sript takes the tactile output (gx, gy) from the trianed model and computes the friction map for haptic rendering.
@@ -87,7 +87,7 @@ def postprocess_gz(
     print("using postprocessing method: ", method)
     if method == "equalize":
         # Enhance the contrast, need input gz to have 3 channels
-        gz_equalize = utils.equalize_this(gz, with_plot=False, clipLimit=4.0, tileGridLength=4)
+        gz_equalize = myutils.equalize_this(gz, with_plot=False, clipLimit=4.0, tileGridLength=4)
         gz_equalize = (gz_equalize - np.min(gz_equalize)) / (np.max(gz_equalize) - np.min(gz_equalize))
         gz_postprocess = gz_equalize
 
@@ -316,7 +316,7 @@ def generate_Tanvas_images(
 
     # Save Tanvas images
     if output_dir is None:
-        output_dir = utils.create_log_dir_by_date(parent_dir=".", log_dir="results")
+        output_dir = myutils.create_log_dir_by_date(parent_dir=".", log_dir="results")
     print(f"Save output Tanvas maps to {output_dir}")
     if not use_short_exp_name:
         save_name = exp_name
@@ -335,7 +335,7 @@ def generate_Tanvas_images(
 
 if __name__ == "__main__":
     output_folder = "Tanvas_maps"
-    output_dir = os.path.join(utils.create_log_dir_by_date(parent_dir=".", log_dir="results"), output_folder)
+    output_dir = os.path.join(myutils.create_log_dir_by_date(parent_dir=".", log_dir="results"), output_folder)
     os.makedirs(output_dir, exist_ok=True)
         materials = ["BlackJeans", "BluePants", "BlueSports", "BrownVest", "ColorPants", "ColorSweater", "DenimShirt",
         "FlowerJeans", "FlowerShorts", "GrayPants", "GreenShirt", "GreenSkirt", "GreenSweater", "GreenTee",

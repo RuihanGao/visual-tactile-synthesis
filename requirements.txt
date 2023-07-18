@@ -16,3 +16,7 @@ GPUtil
 opencv-python
 scikit-image
 torchmetrics
+av # for .exr image format
+
+clip
+clip-by-openai
