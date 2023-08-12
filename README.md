@@ -147,10 +147,10 @@ To compile the quantitative metrics of the tested method in a tabulated format, 
 
 ## Citation
 ``` bibtex
-@article{gao2023controllable,
+@inproceedings{gao2023controllable,
   title={Controllable Visual-Tactile Synthesis},
   author={Gao, Ruihan and Yuan, Wenzhen and Zhu, Jun-Yan},
-  journal={arXiv preprint arXiv:2305.03051},
+  booktitle={IEEE International Conference on Computer Vision (ICCV)},
   year={2023},
 }
 ```
