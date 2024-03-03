@@ -101,7 +101,7 @@ We provide the pretrained models for our method and several baselines included i
 See the Google Drive folder [here](https://drive.google.com/drive/folders/1ewamRPEyKir3jiPoeS7NBmZPZbFqxEoB?usp=sharing). To use them, <br>
 (1) download the checkpoints <br>
 * checkpoints for our method (124M): `gdown "https://drive.google.com/uc?export=download&id=11y2jP2vT7CtBIaEDcjROZ5hupHsYWG8D"`
-* checkpoints for baselines (21.5G): `gdown "https://drive.google.com/uc?export=download&id=1vBd7awJJml5wDEp5gQGeyefpvilTOByw"`
+* checkpoints for baselines (21.5G): `gdown "https://drive.google.com/uc?export=download&id=16NNU1GuOWWtarzEJkLSYbeSqQVaX-943"`
 
 (2) After unzipping the files, put all pre-trained models in the folder `checkpoints` to load them properly in the testing code.
 
